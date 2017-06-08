@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux';
 
 import {
-    HomeReducer
+    HomeReducer, ForecastReducer
 } from '../screens';
 
 export default combineReducers({
-    home: HomeReducer
+    home: HomeReducer,
+    forecast: ForecastReducer
 });

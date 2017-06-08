@@ -13,7 +13,12 @@ const styles = EStyleSheet.create({
     },
     textColor: {
         color: '$whiteColor'
-    }
+    },
+    city: {
+        color: '$whiteColor',
+        fontSize: 22,
+        fontWeight: '100',
+    },
 });
 
 export default styles;

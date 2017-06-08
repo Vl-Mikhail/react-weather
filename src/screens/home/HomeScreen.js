@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, View, TextInput, KeyboardAvoidingView } from "react-native";
+import { KeyboardAvoidingView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import { LoadingScreen } from "../../commons";
 import styles from "./styles/HomeScreen";
@@ -15,10 +15,12 @@ class HomeScreen extends Component {
 
     state = {
         searchedCity: "Barnaul",
+        refreshing: false,
     };
 
     static navigationOptions = {
         title: 'Прогноз погоды',
+        headerTitleStyle: {fontFamily: 'Cochin'},
         headerStyle: {
             backgroundColor: Colors.whiteColor
         },
@@ -47,6 +49,19 @@ class HomeScreen extends Component {
         })
     };
 
+    onSearchPressed = () => {
+        const {navigate} = this.props.navigation;
+        navigate("ForecastScreen", this.state.searchedCity);
+    };
+
+    _onRefresh = () => {
+        this.setState({refreshing: true});
+        this.props.fetchWeather(this.state.searchedCity).then(() => {
+            this.setState({refreshing: false});
+        });
+    }
+
+
     render () {
 
         console.log(this.props);
@@ -67,7 +82,7 @@ class HomeScreen extends Component {
 
         return (
             <View style={styles.root}>
-                <KeyboardAvoidingView  behavior='padding' style={styles.topContainer}>
+                <KeyboardAvoidingView behavior='padding' style={styles.topContainer}>
                     <MaterialCommunityIcons
                         name={weatherIcon(weather[0].icon)}
                         size={130}
@@ -85,6 +100,12 @@ class HomeScreen extends Component {
                                enablesReturnKeyAutomatically={true}
                     />
                 </KeyboardAvoidingView>
+                <View style={styles.flowRight}>
+                    <TouchableOpacity style={styles.ForecastButton}
+                                      onPress={this.onSearchPressed}>
+                        <Text style={styles.ButtonText}>Прогноз погоды на 5 дней</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         )
     }

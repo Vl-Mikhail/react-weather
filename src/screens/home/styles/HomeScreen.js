@@ -11,7 +11,7 @@ const styles = EStyleSheet.create({
         backgroundColor: '$blackBlueColor',
     },
     topContainer: {
-        flex: 1,
+        flex: 2,
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: '-5%',
@@ -35,6 +35,29 @@ const styles = EStyleSheet.create({
         marginHorizontal: 20,
         paddingHorizontal: 10,
         borderRadius: 5,
+    },
+    ForecastButton: {
+        borderWidth: 1,
+        borderColor: '#666',
+        // backgroundColor: '#666',
+        height: 40,
+        marginVertical: 20,
+        marginHorizontal: 20,
+        paddingHorizontal: 10,
+        borderRadius: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    ButtonText: {
+        color: 'white',
+        justifyContent: 'center',
+        alignItems:'center'
+    },
+    flowRight: {
+        flex:0.5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: '-5%',
     },
 });
 
