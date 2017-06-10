@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { KeyboardAvoidingView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { AsyncStorage, KeyboardAvoidingView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import { LoadingScreen } from "../../commons";
 import styles from "./styles/HomeScreen";
-import Colors from "../../../constants/Colors";
 import weatherIcon from "../../../constants/weatherIcons";
 
 import { connect } from "react-redux";
@@ -14,16 +13,17 @@ import { fetchWeather } from "./actions";
 class HomeScreen extends Component {
 
     state = {
-        searchedCity: "Barnaul",
         refreshing: false,
+        searchedCity: "Barnaul",
     };
 
     static navigationOptions = {
-        title: 'Прогноз погоды',
-        headerTitleStyle: {fontFamily: 'Cochin'},
-        headerStyle: {
-            backgroundColor: Colors.whiteColor
-        },
+        header: null,
+        // title: 'Прогноз погоды',
+        // headerTitleStyle: {fontFamily: 'Cochin'},
+        // headerStyle: {
+        //     backgroundColor: Colors.whiteColor
+        // },
         tabBarIcon: ({tintColor}) => (
             <FontAwesome
                 name="home"
@@ -45,8 +45,9 @@ class HomeScreen extends Component {
 
     onChangeText = searchedCity => {
         this.setState({
-            searchedCity: searchedCity
-        })
+            searchedCity: searchedCity,
+        });
+        AsyncStorage.setItem('city', searchedCity);
     };
 
     onSearchPressed = () => {
@@ -54,17 +55,9 @@ class HomeScreen extends Component {
         navigate("ForecastScreen", this.state.searchedCity);
     };
 
-    _onRefresh = () => {
-        this.setState({refreshing: true});
-        this.props.fetchWeather(this.state.searchedCity).then(() => {
-            this.setState({refreshing: false});
-        });
-    }
-
-
     render () {
 
-        console.log(this.props);
+        console.log(this.props.weather);
 
         const {weather: {isFetched, error}} = this.props;
 
@@ -99,6 +92,7 @@ class HomeScreen extends Component {
                                returnKeyType={"search"}
                                enablesReturnKeyAutomatically={true}
                     />
+                    {/*<Text>{AsyncStorage.getItem('city')}</Text>*/}
                 </KeyboardAvoidingView>
                 <View style={styles.flowRight}>
                     <TouchableOpacity style={styles.ForecastButton}

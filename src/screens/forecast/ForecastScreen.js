@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-import { ListView, Text, View } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { ListView, RefreshControl, Text, View } from "react-native";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { LoadingScreen } from "../../commons";
 import Colors from "../../../constants/Colors";
 import styles from "./styles/ForecastScreen";
 import { List, ListItem } from "react-native-elements";
-import weatherIcon from "../../../constants/weatherIcons";
 import moment from "moment";
 
 
@@ -17,12 +16,14 @@ class ForecastScreen extends Component {
 
     state = {
         searchedCity: this.props.navigation.state.params,
+        refreshing: false,
         dataSource: new ListView.DataSource({
             rowHasChanged: (row1, row2) => row1 !== row2,
         })
     };
     static navigationOptions = {
-        title: 'Прогноз погоды на 5 дней',
+        // title: 'Прогноз погоды на 5 дней',
+        header: null,
         headerTitleStyle: {
             // fontSize: 15,
             fontFamily: 'Cochin'
@@ -59,7 +60,7 @@ class ForecastScreen extends Component {
                 title={`Temp: ${Math.round(rowData.main.temp)}°C`}
                 subtitle={rowData.weather[0].main}
                 label={<Text style={{height: 70}}>
-                    {moment(rowData.dt_txt).format('MMM Do, h:mm')}
+                    {moment(rowData.dt_txt).utc().calendar()}
                 </Text>}
                 hideChevron={true}
                 // rightTitle="Hello"
@@ -68,6 +69,14 @@ class ForecastScreen extends Component {
             />
         )
     }
+
+    _onRefresh = () => {
+        this.setState({refreshing: true});
+        this.props.fetchForecast(this.state.searchedCity).then(() => {
+            this.setState({refreshing: false}, () => this._loadInitialState());
+        });
+    };
+
 
     render () {
 
@@ -83,17 +92,33 @@ class ForecastScreen extends Component {
             );
         }
 
-        const {weather: {data: {data: {city, list}}}} = this.props;
+        const {navigation, weather: {data: {data: {city, list}}}} = this.props;
 
         return (
             <View style={styles.root}>
                 <View style={styles.topContainer}>
-                    <Text style={styles.city}>{city.name}, {city.country}</Text>
-                    <Text style={styles.city}>{`Температура сейчас: ${list[0].main.temp}°C`}</Text>
+                    <View style={styles.icon}>
+                        <Ionicons
+                            name='ios-arrow-back'
+                            size={30}
+                            color="white"
+                            onPress={() => navigation.goBack()}
+                        />
+                    </View>
+                    <View style={styles.headerText}>
+                        <Text style={styles.city}>{city.name}, {city.country}</Text>
+                        <Text style={styles.city}>{`Температура через 3 часа: ${list[0].main.temp}°C`}</Text>
+                    </View>
                 </View>
                 <View style={{flex: 3}}>
                     <List>
                         <ListView
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={this.state.refreshing}
+                                    onRefresh={this._onRefresh.bind(this)}
+                                />
+                            }
                             renderRow={this.renderRow}
                             dataSource={this.state.dataSource}
                         />

@@ -8,8 +8,6 @@ const styles = EStyleSheet.create({
     },
     topContainer: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
     },
     textColor: {
         color: '$whiteColor'
@@ -19,6 +17,17 @@ const styles = EStyleSheet.create({
         fontSize: 22,
         fontWeight: '100',
     },
+    icon: {
+        flex: 1,
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
+        margin: 20
+    },
+    headerText:{
+        flex: 3,
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+    }
 });
 
 export default styles;

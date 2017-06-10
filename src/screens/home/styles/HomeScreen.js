@@ -9,6 +9,10 @@ const styles = EStyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         backgroundColor: '$blackBlueColor',
+        // width: null,
+        // height: null,
+        // backgroundColor: 'transparent',
+        // resizeMode: 'cover'
     },
     topContainer: {
         flex: 2,
