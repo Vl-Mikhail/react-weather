@@ -1,6 +1,14 @@
-# Redux
+# Weather App
 
-### redux-promise-middleware
+<h4>Главный экран</h4>
+<p align="left">
+  <img src="assets/Home.png">
+</p>
+
+<h4>Выбор значения для поиска</h4>
+<p align="left">
+  <img src="assets/Forecast.png">
+</p>
 
 # Weather Parameters:
 
