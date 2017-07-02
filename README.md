@@ -5,12 +5,12 @@
   <img src="assets/Forecast.png" width="200">
 </p>
 
-<h4>Выбор значения для поиска</h4>
+<h4>Прогноз погоды на 5 дней</h4>
 <p align="left">
   <img src="assets/Home.png" width="200">
 </p>
 
-# Weather Parameters:
+# Weather Parameters (API):
 
 ### coord
     coord.lon City geo location, longitude
@@ -55,6 +55,4 @@
     City ID
 ### name 
     City name
-### cod 
-    Internal parameter
 -----
