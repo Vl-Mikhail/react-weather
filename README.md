@@ -2,12 +2,12 @@
 
 <h4>Главный экран</h4>
 <p align="left">
-  <img src="assets/Home.png">
+  <img src="assets/Forecast.png" width="200">
 </p>
 
 <h4>Выбор значения для поиска</h4>
 <p align="left">
-  <img src="assets/Forecast.png">
+  <img src="assets/Home.png" width="200">
 </p>
 
 # Weather Parameters:
